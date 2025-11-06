@@ -1,1 +1,7 @@
 __pycache__/
+<<<<<<< HEAD
+=======
+*.pyc
+venv/
+*_recon.json
+>>>>>>> fcf489ecb5885dddba100293f72d208a766e73eb
