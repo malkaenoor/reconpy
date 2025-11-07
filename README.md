@@ -60,13 +60,17 @@ python3 recon_final.py -t example.com --no-dns --no-sub --no-http
 
 python3 recon_final.py -t example.com --repo-url https://github.com/malkaenoor/reconpy
 reconpy/
+
+
 ├── recon_final.py          # main recon tool
 ├── make_report.py          # report generator
 ├── examples/               # example reports
 ├── README.md               # documentation
 ├── CONTRIBUTORS.md          # team details
 └── LICENSE                 # MIT license
+
 Developers — Team Alpha
+
 | Name            | Role                    | GitHub                                          |
 | --------------- | ----------------------- | ----------------------------------------------- |
 | **Ayesha Noor** | Lead Intern / Developer | [malkaenoor](https://github.com/malkaenoor)     |
