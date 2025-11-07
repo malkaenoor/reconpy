@@ -47,11 +47,17 @@ Reports are stored locally and can be easily shared or converted using the `make
   ```bash
   python3 -m pip install --user requests dnspython
 git clone https://github.com/malkaenoor/reconpy.git
+
 cd reconpy
+
 python3 recon_final.py -t example.com
+
 python3 recon_final.py -t example.com -p 1-1024
+
 python3 recon_final.py -t example.com -w subdomains.txt
+
 python3 recon_final.py -t example.com --no-dns --no-sub --no-http
+
 python3 recon_final.py -t example.com --repo-url https://github.com/malkaenoor/reconpy
 reconpy/
 ├── recon_final.py          # main recon tool
