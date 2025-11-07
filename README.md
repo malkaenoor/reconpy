@@ -71,7 +71,10 @@ reconpy/
 
 Developers — Team Alpha
 
-| Name            | Role                    | GitHub                                          |
-| --------------- | ----------------------- | ----------------------------------------------- |
-| **Ayesha Noor** | Lead Intern / Developer | [malkaenoor](https://github.com/malkaenoor)     |
-| **Bilal Nasir** | Co-Developer / Research | [bilalnasir15](https://github.com/bilalnasir15) |
+| Name            | GitHub                                          |
+| --------------- | ----------------------------------------------- |
+| **Ayesha Noor** | [malkaenoor](https://github.com/malkaenoor)     |
+| **Bilal Nasir** | [bilalnasir15](https://github.com/bilalnasir15) |
+|**Muhammad Amir**|                                                 |
+|**ALI Naeem**    |                                                 | 
+|**Adnan khan**   |                                                 |
