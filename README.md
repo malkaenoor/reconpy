@@ -42,7 +42,15 @@ Reports are stored locally and can be easily shared or converted using the `make
 
 ## ⚙️ Installation
 ### Prerequisites
-- Python 3.8 or higher  
+- Python 3.8 or higher
+- ## Installation
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+## Usage
+python recon_final.py example.com
+
 - Optional libraries for extended features:
   ```bash
   python3 -m pip install --user requests dnspython
