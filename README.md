@@ -39,52 +39,60 @@ Reports are stored locally and can be easily shared or converted using the `make
 | **Report Generator** | Converts JSON → HTML & TXT automatically |
 
 ---
-
+> ⚠️ Use only on authorized targets.
+---
 ## ⚙️ Installation
-### Prerequisites
+
+### 📌 Prerequisites
 - Python 3.8 or higher
-python3 -m venv venv
+- Git
+- Linux / Kali Linux recommended
 
-source venv/bin/activate
+---
+### 📥 Clone Repository
 
-pip install -r requirements.txt
-
-
-## Usage
-python recon_final.py example.com
-
-- Optional libraries for extended features:
-  ```bash
-  python3 -m pip install --user requests dnspython
+```bash
 git clone https://github.com/malkaenoor/reconpy.git
-
 cd reconpy
 
-python3 recon_final.py -t example.com
 
+🐍 Create Virtual Environment (Recommended)
+bash
+Copy code
+python3 -m venv venv
+source venv/bin/activate
+
+📦 Install Dependencies
+bash
+Copy code
+pip install -r requirements.txt
+If requirements.txt is missing, install manually:
+
+bash
+Copy code
+pip install requests dnspython
+
+🚀 Usage
+🔹 Basic Recon Scan
+bash
+Copy code
+python3 recon_final.py -t example.com
+🔹 Custom Port Range
+bash
+Copy code
 python3 recon_final.py -t example.com -p 1-1024
 
+🔹 Subdomain Enumeration with Wordlist
+bash
+Copy code
 python3 recon_final.py -t example.com -w subdomains.txt
-
+🔹 Disable Specific Modules
+bash
+Copy code
 python3 recon_final.py -t example.com --no-dns --no-sub --no-http
 
-python3 recon_final.py -t example.com --repo-url https://github.com/malkaenoor/reconpy
-reconpy/
+📊 Output
+Automatic JSON report generation:
+example.com_recon.json
 
-
-├── recon_final.py          # main recon tool
-├── make_report.py          # report generator
-├── examples/               # example reports
-├── README.md               # documentation
-├── CONTRIBUTORS.md          # team details
-└── LICENSE                 # MIT license
-
-Developers — Team Alpha
-
-| Name            | GitHub                                          |
-| --------------- | ----------------------------------------------- |
-| **Ayesha Noor** | [malkaenoor](https://github.com/malkaenoor)     |
-| **Bilal Nasir** | [bilalnasir15](https://github.com/bilalnasir15) |
-|**Muhammad Amir**|                                                 |
-|**ALI Naeem**    |                                                 | 
-|**Adnan khan**   |                                                 |
+Developers — Team Lambda by ITSOERA
