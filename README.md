@@ -62,6 +62,10 @@ source venv/bin/activate
 
 pip install requests dnspython
 
+pip install python-dotenv
+
+pip install python-dotenv shodan vt-py dnsgen
+
 python3 recon_final.py -t example.com
 
 python recon_final.py -t example.com --advanced-subdomains
