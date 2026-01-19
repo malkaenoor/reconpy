@@ -53,46 +53,21 @@ Reports are stored locally and can be easily shared or converted using the `make
 
 ```bash
 git clone https://github.com/malkaenoor/reconpy.git
+
 cd reconpy
 
-
-🐍 Create Virtual Environment (Recommended)
-bash
-Copy code
 python3 -m venv venv
+
 source venv/bin/activate
 
-📦 Install Dependencies
-bash
-Copy code
-pip install -r requirements.txt
-If requirements.txt is missing, install manually:
-
-bash
-Copy code
 pip install requests dnspython
 
-🚀 Usage
-🔹 Basic Recon Scan
-bash
-Copy code
 python3 recon_final.py -t example.com
-🔹 Custom Port Range
-bash
-Copy code
-python3 recon_final.py -t example.com -p 1-1024
 
-🔹 Subdomain Enumeration with Wordlist
-bash
-Copy code
-python3 recon_final.py -t example.com -w subdomains.txt
-🔹 Disable Specific Modules
-bash
-Copy code
+python recon_final.py -t example.com --advanced-subdomains
+
 python3 recon_final.py -t example.com --no-dns --no-sub --no-http
 
-📊 Output
-Automatic JSON report generation:
 example.com_recon.json
 
 Developers — Team Lambda by ITSOERA
