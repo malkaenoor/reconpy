@@ -2,16 +2,22 @@
 """
 ReconPy - Professional Recon Tool
 Author: malkaenoor
+Description:
+A modular reconnaissance framework supporting DNS enumeration,
+advanced subdomain discovery, port scanning, banner grabbing,
+technology detection, and professional report generation.
 """
 
+# ===================== STANDARD LIBRARIES ===================== #
+from advanced_subdomains import *
+import os
 import argparse
 import socket
 import json
-import hashlib
+import ssl
 from datetime import datetime
 from urllib.parse import urljoin
 from html import unescape
-import ssl
 
 # ---------------- OPTIONAL LIBS ----------------
 try:
@@ -103,7 +109,7 @@ def whois_lookup(domain):
         return {}
 
 def subdomain_enum(domain):
-    print("\n[+] Subdomain Enumeration")
+    print("\n[+] Subdomain Enumeration (Basic)")
     rows = []
     found = []
     for s in DEFAULT_SUBS:
@@ -119,6 +125,44 @@ def subdomain_enum(domain):
     else:
         print("No subdomains found")
     return found
+
+# 🔥 ADVANCED SUBDOMAINS (NEW – SAFE ADDITION)
+def advanced_subdomain_enum(domain):
+    print("\n[+] Advanced Subdomain Enumeration (Passive + Brute)")
+    results = set()
+    rows = []
+
+    try:
+        for s in virustotal_enum(domain):
+            results.add(s)
+    except:
+        pass
+
+    try:
+        for s in shodan_enum(domain):
+            results.add(s)
+    except:
+        pass
+
+    try:
+        for s in bruteforce_enum(domain):
+            results.add(s)
+    except:
+        pass
+
+    for sub in sorted(results):
+        try:
+            ip = socket.gethostbyname(sub)
+        except:
+            ip = "-"
+        rows.append([sub, ip])
+
+    if rows:
+        table(["Subdomain","IP"], rows)
+    else:
+        print("No advanced subdomains found")
+
+    return [{"subdomain": r[0], "ip": r[1]} for r in rows]
 
 def port_scan(domain, ports):
     print("\n[+] Port Scanning")
@@ -144,7 +188,7 @@ def http_enum(domain):
     if not REQUESTS:
         print("requests module not installed")
         return {}
-    for scheme,port in [("http",80),("https",443)]:
+    for scheme in ["http","https"]:
         try:
             url = f"{scheme}://{domain}"
             r = requests.get(url, timeout=5, headers={"User-Agent":"ReconPy"})
@@ -166,7 +210,7 @@ def http_enum(domain):
     return data
 
 # ---------------- MAIN RECON ----------------
-def run(target, ports, do_whois):
+def run(target, ports, do_whois, advanced):
     banner()
     report = {
         "target": target,
@@ -174,10 +218,15 @@ def run(target, ports, do_whois):
     }
 
     report["dns"] = dns_lookup(target)
+
     if do_whois:
         report["whois"] = whois_lookup(target)
 
     report["subdomains"] = subdomain_enum(target)
+
+    if advanced:
+        report["advanced_subdomains"] = advanced_subdomain_enum(target)
+
     report["ports"] = port_scan(target, ports)
     report["http"] = http_enum(target)
 
@@ -203,14 +252,20 @@ def parse_ports(p):
     return sorted(set(out))
 
 def main():
-    ap = argparse.ArgumentParser(description="ReconPy - Professional Recon Tool")
-    ap.add_argument("-t","--target", required=True)
-    ap.add_argument("-p","--ports")
-    ap.add_argument("--whois", action="store_true")
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--target", required=True)
+    parser.add_argument("-p", "--ports")
+    parser.add_argument("--whois", action="store_true")
+    parser.add_argument(
+        "--advanced-subdomains",
+        action="store_true",
+        help="Run advanced subdomain enumeration"
+    )
 
+    args = parser.parse_args()
     ports = parse_ports(args.ports)
-    run(args.target, ports, args.whois)
+
+    run(args.target, ports, args.whois, args.advanced_subdomains)
 
 if __name__ == "__main__":
     main()
