@@ -66,9 +66,11 @@ pip install python-dotenv
 
 pip install python-dotenv shodan vt-py dnsgen
 
-python3 recon_final.py -t example.com
+python3 recon_final.py -t example.com --advanced-subdomains --http-headers --whois
 
-python recon_final.py -t example.com --advanced-subdomains
+python3 recon_final.py -t example.com -p 80,443,8080
+
+python3 recon_final.py -t example.com -p 1-1000
 
 example.com_recon.json
 
