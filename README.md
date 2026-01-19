@@ -70,8 +70,5 @@ python3 recon_final.py -t example.com
 
 python recon_final.py -t example.com --advanced-subdomains
 
-python3 recon_final.py -t example.com --no-dns --no-sub --no-http
-
 example.com_recon.json
 
-Developers — Team Lambda by ITSOERA
