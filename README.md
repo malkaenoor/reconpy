@@ -1,46 +1,66 @@
-# 🔍 ReconPy — Lightweight Reconnaissance Tool (Team Alpha)
+🔍 ReconPy — Lightweight Reconnaissance Tool
 
-**ReconPy** is a Python-based lightweight reconnaissance tool built by **Team Alpha (Interns)**.  
-It automates common surface discovery tasks such as DNS record lookup, subdomain enumeration, port scanning, TLS certificate inspection, and HTTP metadata collection — all in a single, easy-to-use command-line interface.
+Team lambda (Interns)
 
----
+ReconPy is a Python-based lightweight yet powerful reconnaissance framework .
+It automates essential surface-level reconnaissance tasks such as DNS enumeration, subdomain discovery, port scanning, HTTP security analysis, and automated screenshots — all through a single, clean command-line interface.
 
-## ⚠️ Disclaimer
-This tool is designed for **educational and authorized security testing only**.  
-Do **not** use ReconPy to scan systems without explicit permission.
+⚠️ Disclaimer
 
----
+This tool is intended strictly for educational purposes and authorized security testing.
+Do NOT use ReconPy against systems without explicit permission.
+The authors take no responsibility for misuse.
 
-## 🧠 About ReconPy
-ReconPy is a practical, lightweight, and modular reconnaissance utility created by **Team Alpha** to assist interns and students in learning ethical hacking and network reconnaissance.  
-It integrates multiple scanning functions into one workflow:
+🧠 About ReconPy
 
-- DNS Enumeration (A, AAAA, NS, MX, TXT)
-- Subdomain Discovery (built-in + custom wordlist)
-- Port Scanning (default/common/custom ports)
-- TLS Certificate Inspection (subject, issuer, SANs, validity)
-- HTTP(S) Title & Header Fetching (robots.txt check)
-- JSON, TXT & HTML Report Generation
+ReconPy is a modular, beginner-friendly, and extensible recon tool designed to help interns and students understand real-world reconnaissance workflows used in ethical hacking and penetration testing.
 
-Reports are stored locally and can be easily shared or converted using the `make_report.py` helper script.
+It combines multiple reconnaissance techniques into a single pipeline and produces professional, shareable reports.
 
----
+.
 
-## 🚀 Features
-| Category | Description |
-|-----------|--------------|
-| **DNS Enumeration** | Collects A, AAAA, NS, MX, TXT records |
-| **Subdomain Finder** | Resolves subdomains via built-in or custom list |
-| **Port Scanner** | Checks for open/closed TCP ports |
-| **TLS Inspector** | Fetches certificate details (subject, issuer, SAN) |
-| **HTTP Info** | Gets page title, headers & robots.txt |
-| **Fingerprint** | Generates hash fingerprint of title + server header |
-| **Output Formats** | JSON (detailed) & terminal table summary |
-| **Report Generator** | Converts JSON → HTML & TXT automatically |
+🧩 Core Capabilities
 
----
-> ⚠️ Use only on authorized targets.
----
+ReconPy integrates the following modules:
+
+DNS Enumeration
+Basic Subdomain Enumeration
+
+Discovers common subdomains using built-in wordlists
+
+Advanced Subdomain Enumeration
+
+Passive + brute-force discovery using:
+
+VirusTotal API
+Shodan API
+DNS brute-force & permutations
+
+Port Scanning
+Scans default, common, or custom TCP ports
+
+HTTP Enumeration
+
+HTTP Security Headers Analysis
+Detects presence and absence of critical headers:
+
+Automated Website Screenshots
+Captures full-page screenshots of HTTP/HTTPS services for visual reconnaissance
+
+Professional Reporting
+Generates structured JSON reports for easy sharing and post-processing
+
+🚀 Features Overview
+Category                 |      Description
+DNS Enumeration	Collects | A, AAAA, NS, MX, TXT records
+Subdomain Finder	       |Basic + advanced (API-based & brute-force)
+Port Scanner	           |Detects open & closed TCP ports
+HTTP Enumeration         |	Status codes, titles, server headers
+Security Headers	       |Identifies missing HTTP security headers
+Screenshots              |	Automated visual recon of websites
+WHOIS Lookup	           |Domain registration details
+Output	                 |Terminal tables + JSON reports
+
 ## ⚙️ Installation
 
 ### 📌 Prerequisites
@@ -70,12 +90,10 @@ python3 recon_final.py -t example.com --advanced-subdomains --http-headers --who
 
 python3 recon_final.py -t example.com --screenshots
 
-
 🔹 View Screenshot (GUI)
 bash
 Copy code
 xdg-open screenshots/example.com.png
-
 
 🔹 View Screenshot (Terminal)
 bash
@@ -83,10 +101,8 @@ Copy code
 sudo apt install feh -y
 feh screenshots/example.com.png
 
-
 python3 recon_final.py -t example.com -p 80,443,8080
 
 python3 recon_final.py -t example.com -p 1-1000
 
 example.com_recon.json
-
