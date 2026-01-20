@@ -19,6 +19,7 @@ from http_headers import check_http_security_headers
 from datetime import datetime
 from urllib.parse import urljoin
 from html import unescape
+from screenshots import take_screenshot
 
 # ---------------- OPTIONAL LIBS ----------------
 try:
@@ -230,18 +231,23 @@ def main():
     parser.add_argument("--whois", action="store_true")
     parser.add_argument("--advanced-subdomains", action="store_true")
     parser.add_argument("--http-headers", action="store_true")
+    parser.add_argument("--screenshots",action="store_true",
+    help="Capture automated screenshots of target"
+)
 
     args = parser.parse_args()
     ports = parse_ports(args.ports)
-
     run(
-        args.target,
-        ports,
-        args.whois,
-        args.advanced_subdomains,
-        args.http_headers
-    )
-def run(target, ports, do_whois, advanced, do_headers):
+    args.target,
+    ports,
+    args.whois,
+    args.advanced_subdomains,
+    args.http_headers,
+    args.screenshots
+)
+
+#__________________run___________________
+def run(target, ports, do_whois, advanced, do_headers, do_screenshots):
     banner()
 
     report = {
@@ -262,14 +268,33 @@ def run(target, ports, do_whois, advanced, do_headers):
     report["ports"] = port_scan(target, ports)
     report["http"] = http_enum(target)
 
+    # ---------------- HTTP SECURITY HEADERS ----------------
     if do_headers:
         print("\n[+] HTTP Security Headers")
-        report["http_headers"] = check_http_security_headers(target)
+        report["http_security_headers"] = check_http_security_headers(target)
 
-    with open(f"{target}_recon.json", "w") as f:
+    # ---------------- AUTOMATED SCREENSHOTS ----------------
+    if do_screenshots:
+        print("\n[+] Automated Screenshots")
+        screenshots = []
+
+        for scheme in ["http", "https"]:
+            url = f"{scheme}://{target}"
+            path = take_screenshot(url)
+            screenshots.append({
+                "url": url,
+                "file": path
+            })
+
+        report["screenshots"] = screenshots
+
+    fname = f"{target}_recon.json"
+    with open(fname, "w") as f:
         json.dump(report, f, indent=2)
 
     print("\n[✓] Recon Complete")
+    print(f"[✓] Report saved → {fname}")
+    print("=" * 90)
 
 
 if __name__ == "__main__":
