@@ -15,6 +15,7 @@ import argparse
 import socket
 import json
 import ssl
+from http_headers import check_http_security_headers
 from datetime import datetime
 from urllib.parse import urljoin
 from html import unescape
@@ -126,7 +127,6 @@ def subdomain_enum(domain):
         print("No subdomains found")
     return found
 
-# 🔥 ADVANCED SUBDOMAINS (NEW – SAFE ADDITION)
 def advanced_subdomain_enum(domain):
     print("\n[+] Advanced Subdomain Enumeration (Passive + Brute)")
     results = set()
@@ -209,9 +209,41 @@ def http_enum(domain):
     table(["Proto","Status","Title","Server"], rows)
     return data
 
-# ---------------- MAIN RECON ----------------
-def run(target, ports, do_whois, advanced):
+# ---------------- CLI ----------------
+def parse_ports(p):
+    if not p:
+        return DEFAULT_PORTS
+    out = []
+    for x in p.split(","):
+        if "-" in x:
+            a,b = x.split("-")
+            out.extend(range(int(a), int(b)+1))
+        else:
+            out.append(int(x))
+    return sorted(set(out))
+#________________main__________________
+def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-t", "--target", required=True)
+    parser.add_argument("-p", "--ports")
+    parser.add_argument("--whois", action="store_true")
+    parser.add_argument("--advanced-subdomains", action="store_true")
+    parser.add_argument("--http-headers", action="store_true")
+
+    args = parser.parse_args()
+    ports = parse_ports(args.ports)
+
+    run(
+        args.target,
+        ports,
+        args.whois,
+        args.advanced_subdomains,
+        args.http_headers
+    )
+def run(target, ports, do_whois, advanced, do_headers):
     banner()
+
     report = {
         "target": target,
         "timestamp": now()
@@ -230,42 +262,15 @@ def run(target, ports, do_whois, advanced):
     report["ports"] = port_scan(target, ports)
     report["http"] = http_enum(target)
 
-    fname = f"{target}_recon.json"
-    with open(fname,"w") as f:
+    if do_headers:
+        print("\n[+] HTTP Security Headers")
+        report["http_headers"] = check_http_security_headers(target)
+
+    with open(f"{target}_recon.json", "w") as f:
         json.dump(report, f, indent=2)
 
     print("\n[✓] Recon Complete")
-    print(f"[✓] Report saved → {fname}")
-    print("="*90)
 
-# ---------------- CLI ----------------
-def parse_ports(p):
-    if not p:
-        return DEFAULT_PORTS
-    out = []
-    for x in p.split(","):
-        if "-" in x:
-            a,b = x.split("-")
-            out.extend(range(int(a), int(b)+1))
-        else:
-            out.append(int(x))
-    return sorted(set(out))
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-t", "--target", required=True)
-    parser.add_argument("-p", "--ports")
-    parser.add_argument("--whois", action="store_true")
-    parser.add_argument(
-        "--advanced-subdomains",
-        action="store_true",
-        help="Run advanced subdomain enumeration"
-    )
-
-    args = parser.parse_args()
-    ports = parse_ports(args.ports)
-
-    run(args.target, ports, args.whois, args.advanced_subdomains)
 
 if __name__ == "__main__":
     main()

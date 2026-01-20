@@ -1,0 +1,7 @@
+from dnsgen import dnsgen
+
+def permute_subdomains(subdomains):
+    perms = set()
+    for d in dnsgen(subdomains):
+        perms.add(d)
+    return list(perms)
