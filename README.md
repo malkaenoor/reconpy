@@ -68,6 +68,22 @@ pip install python-dotenv shodan vt-py dnsgen
 
 python3 recon_final.py -t example.com --advanced-subdomains --http-headers --whois
 
+python3 recon_final.py -t example.com --screenshots
+
+
+🔹 View Screenshot (GUI)
+bash
+Copy code
+xdg-open screenshots/example.com.png
+
+
+🔹 View Screenshot (Terminal)
+bash
+Copy code
+sudo apt install feh -y
+feh screenshots/example.com.png
+
+
 python3 recon_final.py -t example.com -p 80,443,8080
 
 python3 recon_final.py -t example.com -p 1-1000
